@@ -17,7 +17,7 @@ if bool(os.environ.get('HEROKU')):
 	app.config['DB'] = str(os.environ.get('DB_NAME', None))
 	app.config['DB_USERNAME'] = str(os.environ.get('DB_USERNAME', None))
 	app.config['DB_PASSWORD'] = str(os.environ.get('DB_PASSWORD', None))
-	app.config['DB_HOST'] = str(os.environ.get('DB_HOST_ADDRESS', None))
+	app.config['DB_HOST'] = str(os.environ.get('DB_HOST', None))
 	app.config['DB_PORT'] = int(os.environ.get("PORT", None))
 else:
 	app.config.from_pyfile('settings.cfg')
