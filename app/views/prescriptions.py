@@ -3,45 +3,6 @@ from app.utils import login_required, get_http_method
 from app import app, bcrypt, models
 from app.models import User, Follower, Prescription
 
-# Add new prescription page
-@app.route('/prescriptions/new', methods=['GET', 'POST'])
-@login_required
-def new_prescription():	
-	http_method = get_http_method(request)
-	if http_method == 'POST':
-		name = request.form['name']
-		amount = request.form['amount']
-		description = request.form['description']
-		doctor = request.form['doctor']
-		user = User.objects.get(username=session['logged_in'])
-
-		if 'morningalarm' in request.form and request.form['morningalarm']=='on':
-			morningalarm = True
-		else:
-			morningalarm = False
-		if 'afternoonalarm' in request.form  and request.form['afternoonalarm']=='on':
-			afternoonalarm = True
-		else:
-			afternoonalarm = False
-		if 'eveningalarm' in request.form  and request.form['eveningalarm']=='on':
-			eveningalarm = True
-		else:
-			eveningalarm = False
-		if 'nightalarm' in request.form  and request.form['nightalarm']=='on':
-			nightalarm = True
-		else:
-			nightalarm = False
-
-		newprescription = Prescription(name=name, amount=amount, description=description, doctor=doctor, morningalarm=morningalarm, afternoonalarm=afternoonalarm, eveningalarm=eveningalarm, nightalarm=nightalarm)
-		
-		user.prescriptions.append(newprescription)
-		user.save()
-
-		flash('New Prescription Added')
-		return redirect(url_for('prescriptions'))
-	else: # if http_method='GET'
-		return render_template('addprescription.html')
-
 # Single prescription page
 @app.route('/prescriptions/<id>', methods=['GET','POST'])
 @login_required
@@ -107,11 +68,22 @@ def prescription(id):
 
 
 # All prescriptions page
-@app.route('/prescriptions', methods=['GET'])
+@app.route('/prescriptions', methods=['GET', 'POST'])
 @login_required
 def prescriptions():
-	user = User.objects.get(username=session['logged_in'])
-	data = []
-	for prescription in user.prescriptions:
-		data.append(prescription.to_dict())
-	return render_template('prescriptions.html', data=data)
+	http_method = get_http_method(request)
+	if http_method == 'GET':
+		user = User.objects.get(username=session['logged_in'])
+		data = []
+		for prescription in user.prescriptions:
+			data.append(prescription.to_dict())
+		return render_template('prescriptions.html', data=data)
+	else: # http_method == 'POST'
+		new_prescription = Prescription()
+		user = User.objects.get(username=session['logged_in'])
+		user.prescriptions.append(new_prescription)
+		id = len(user.prescriptions)-1
+		user.save()
+		return redirect(url_for('prescription', id=id))
+
+

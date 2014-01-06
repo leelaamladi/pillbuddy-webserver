@@ -3,54 +3,35 @@ from app.utils import login_required, get_http_method
 from app import app, bcrypt, models
 from app.models import User, Follower, Prescription
 
-@app.route('/followers/new', methods=['GET', 'POST'])
-@login_required
-def new_follower():
-	http_method = get_http_method(request)
-	if http_method == 'POST':
-		email = request.form['email']
-		phonenumber = request.form['phonenumber']
-		twitter = request.form['twitter']
-		if 'email_on' in request.form and request.form['email_on']=='on':
-			email_on = True
-		else:
-			email_on = False
-		if 'phone_on' in request.form  and request.form['phone_on']=='on':
-			phone_on = True
-		else:
-			phone_on = False
-		if 'twitter_on' in request.form  and request.form['twitter_on']=='on':
-			twitter_on = True
-		else:
-			twitter_on = False
-
-		user = User.objects.get(username=session['logged_in'])
-		newfollower = Follower(email=email, phonenumber=phonenumber, twitter=twitter, email_on=email_on, phone_on=phone_on, twitter_on=twitter_on)
-		user.followers.append(newfollower)
-		user.save()
-
-		flash('New Follower Added')
-		return redirect(url_for('followers'))
-	
-	else: # if http_method='GET'
-		return render_template('addfollower.html')
-
 # Followers page
-@app.route('/followers', methods=['GET'])
+@app.route('/followers', methods=['GET','POST'])
 @login_required
 def followers():
-	user = User.objects.get(username=session['logged_in'])
-	data = []
-	for follower in user.followers:
-		data.append(follower.to_dict())
-	return render_template('followers.html', data=data)
+	http_method = get_http_method(request)
+	if http_method == 'GET':
+		user = User.objects.get(username=session['logged_in'])
+		data = []
+		for follower in user.followers:
+			data.append(follower.to_dict())
+		return render_template('followers.html', data=data)
+	else: # http_method == 'POST'
+		new_follower = Follower()
+		user = User.objects.get(username=session['logged_in'])
+		user.followers.append(new_follower)
+		id = len(user.followers)-1
+		user.save()
+		return redirect(url_for('follower', id=id))
 
 @app.route('/followers/<id>', methods=['GET','POST','DELETE'])
 @login_required
 def follower(id):
 	http_method = get_http_method(request)
 	if http_method == 'GET':
-		return redirect(url_for('followers'))
+		id = int(id)
+		user = User.objects.get(username=session['logged_in'])
+		follower = user.followers[id]
+		data = follower.to_dict()
+		return render_template('follower.html', follower=data, id=id)
 	
 	elif http_method == 'POST':
 		id = int(id)

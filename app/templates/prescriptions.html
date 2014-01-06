@@ -2,14 +2,14 @@
   
 {% block content %}
 <h2>Prescriptions <small>Edit your Prescriptions</small></h2>
-<a href="{{url_for('new_prescription')}}">
- <button type="button" class="btn btn-success">Add Prescription</button>
-</a>
+<form method="POST" action="{{url_for('prescriptions')}}">
+<button type="submit" class="btn btn-success">Add Prescription</button>
+</form>
  <div class="row">
   {% for prescription in data %}
   	{% set id = loop.index0 %}
   	<div class="col-sm-6">
-  	{% include "prescriptionForm.html" %}
+  	{% include "editPrescription.html" %}
   	</div>
   {% endfor %}
  </div>

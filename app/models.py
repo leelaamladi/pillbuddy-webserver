@@ -2,10 +2,10 @@ from mongoengine import *
 import datetime
 
 class Prescription(EmbeddedDocument):
-    name = StringField(max_length=60, required=True)
-    amount = StringField(required=True)
-    description = StringField(max_length=149, required=True)
-    doctor = StringField(max_length=40, required=True)
+    name = StringField(default="", max_length=60, required=True)
+    amount = StringField(default="", required=True)
+    description = StringField(default="", max_length=149, required=True)
+    doctor = StringField(max_length=40, required=False)
     morningalarm = BooleanField(default=False, required=True)
     afternoonalarm = BooleanField(default=False, required=True)
     eveningalarm = BooleanField(default=False, required=True)
@@ -30,9 +30,9 @@ class Prescription(EmbeddedDocument):
         return props
 
 class Follower(EmbeddedDocument) :
-    email = StringField(required=False)
-    phonenumber = StringField(required=False)
-    twitter = StringField(required=False)
+    email = StringField(default="", required=False)
+    phonenumber = StringField(default="", required=False)
+    twitter = StringField(default="", required=False)
     phone_on = BooleanField(default=False, required=True)
     email_on = BooleanField(default=False, required=True)
     twitter_on = BooleanField(default=False, required=True)
