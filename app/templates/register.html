@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+	<h2>Register</h2>
+  <form method="POST" action="/register">
+  	<input type="text" name="firstname" class="input-block-level" placeholder="First Name" required>
+  	<input type="text" name="lastname" class="input-block-level" placeholder="Last Name" required>
+  	<input type="text" name="username" class="input-block-level" placeholder="Username" required>
+    <input type="password" name="password" class="input-block-level" placeholder="Password" required>
+    <input type="email" name="email" class="input-block-level" placeholder="Email" required>
+    <input type="tel" name="phonenumber" class="input-block-level" placeholder="Phone Number">
+    <input type="submit" class="btn btn-info" value="Submit">
+  </form>
+{% endblock %}

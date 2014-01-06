@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="hero-unit">
+  <h1>DASHBOARD</h1>
+  <p>Pillbudy was started as an arduino hack meant to remind forgetful people to take their pills. This website provides a control center in the cloud for caregivers and the patient to manage their Pillbuddy's settings.</p>
+</div>
+<div class="container">
+	<!-- Row 1 -->
+	<div class="row">
+		<div class="well col-sm-5">
+			<h3>Morning Pills</h3>
+			{% for prescription in data['morning'] %}
+			<a href="{{url_for('prescription', id=prescription['id'])}}">
+			<button type="button" class="btn btn-warning">
+			<p><strong>{{prescription['name']}}</strong> {{prescription['amount']}}</p>
+			</button>
+			</a>
+			{% endfor %}
+		</div>
+
+		<div class="well col-sm-5 col-sm-offset-1">
+			<h3>Afternoon Pills</h3>
+			{% for prescription in data['afternoon'] %}
+			<a href="{{url_for('prescription', id=prescription['id'])}}">
+			<button type="button" class="btn btn-warning">
+			<p><strong>{{prescription['name']}}</strong> {{prescription['amount']}}</p>
+			</button>
+			</a>
+			{% endfor %}
+		</div>
+	</div>
+
+	<!-- Row 2 -->
+	<div class="row">
+		<div class="well col-sm-5">
+			<h3>Evening Pills</h3>
+			{% for prescription in data['evening'] %}
+			<a href="{{url_for('prescription', id=prescription['id'])}}">
+			<button type="button" class="btn btn-warning">
+			<p><strong>{{prescription['name']}}</strong> {{prescription['amount']}}</p>
+			</button>
+			</a>
+			{% endfor %}
+		</div>
+
+		<div class="well col-sm-5 col-sm-offset-1">
+			<h3>Night Pills</h3>
+			{% for prescription in data['night'] %}
+			<a href="{{url_for('prescription', id=prescription['id'])}}">
+			<button type="button" class="btn btn-warning">
+			<p><strong>{{prescription['name']}}</strong> {{prescription['amount']}}</p>
+			</button>
+			</a>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+
+
+
+{% endblock %}

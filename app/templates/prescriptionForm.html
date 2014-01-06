@@ -1,0 +1,76 @@
+<h3><a href="{{ url_for('prescription', id=id) }}">Prescription #{{id+1}}</a></h3>
+<div class="well">
+  <form method="POST" action="/prescriptions/{{id}}" role="form" class="row">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <div class="input-group">
+        <input type="text" name="name" class="form-control" value={{prescription['name']}}>
+        </div><!-- /input-group -->
+      </div>
+      <div class="form-group">
+        <label for="amount">Amount</label>
+        <div class="input-group">
+        <input type="text" name="amount" class="form-control" value="{{prescription['amount']}}">
+        </div><!-- /input-group -->
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <div class="input-group">
+        <input type="text" name="description" class="form-control" value="{{prescription['description']}}">
+        </div><!-- /input-group -->
+      </div>
+      <div class="form-group">
+        <label for="doctor">Doctor</label>
+        <div class="input-group">
+        <input type="text" name="doctor" class="form-control" value="{{prescription['doctor']}}">
+        </div><!-- /input-group -->
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <h4>Alarms</h4>
+      <div class="form-group">
+        <div class="input-group">
+          <label>
+            <input type="checkbox" name="morningalarm" {% if prescription['morningalarm']%}checked{% endif %} >
+            Morning Alarm
+          </label>
+        </div><!-- /input-group -->
+      </div>
+      
+      <div class="form-group" >
+        <div class="input-group">
+          <label>
+            <input type="checkbox" name="afternoonalarm" {% if prescription['afternoonalarm'] %}checked{% endif %} >
+            Afternoon Alarm
+          </label>
+        </div><!-- /input-group -->
+      </div>
+
+      <div class="form-group">
+        <div class="input-group">
+          <label>
+            <input type="checkbox" name="eveningalarm" {% if prescription['eveningalarm'] %}checked{% endif %} >
+            Evening Alarm
+          </label>
+        </div><!-- /input-group -->
+      </div>
+       <div class="form-group">
+        
+        <div class="input-group">
+          <label>
+            <input type="checkbox" name="nightalarm" {% if prescription['nightalarm'] %}checked{% endif %} >
+            Night Alarm
+          </label>
+        </div><!-- /input-group -->
+      </div>
+
+      <input type="submit" class="btn btn-info" value="Submit">
+    </div>
+
+  </form>
+  <form class="delete_button" method="POST" action="{{ url_for('prescription', id=id) }}">
+          <input type="submit" class="btn btn-danger" value="Delete">
+          <input type="hidden" name="_method" value="DELETE">
+        </form>
+</div>

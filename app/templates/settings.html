@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+	<h2>Settings <small> Edit your account</small>
+</h2>
+  <form method="POST" action="/settings" role="form">
+    <div class="form-group">
+      <label for="first_name">First Name</label>
+      <input type="text" name="first_name" class="form-control" placeholder="First Name" value={{data['first_name']}}>
+    </div>
+    <div class="form-group">
+      <label for="last_name">Last Name</label>
+      <input type="text" name="last_name" class="form-control" placeholder="Last Name" value={{data['last_name']}}>
+    </div>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" name="username" class="form-control" placeholder="Username" value={{data['username']}}>
+    </div>
+    <!--<div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" name="password" class="form-control" placeholder="Password" value={{data['password']}}>
+    </div>-->
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" name="email" class="form-control" placeholder="Email" value={{data['email']}}>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="tel" name="phone" class="form-control" placeholder="Phone Number" value={{data['phone']}}>
+    </div>
+    <input type="submit" class="btn btn-info" value="Submit">
+  </div>
+  </form>
+{% endblock %}
