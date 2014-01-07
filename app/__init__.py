@@ -12,7 +12,7 @@ bcrypt = Bcrypt(app)
 # if running from Heroku, grab config from environment variables
 # else, load from settings.py file
 if bool(os.environ.get('HEROKU')):
-	app.config['DEBUG'] = False
+	app.config['DEBUG'] = True
 	app.config['PORT'] = int(os.environ.get("PORT", 5000))
 	app.config['DB'] = str(os.environ.get('DB_NAME', None))
 	app.config['DB_USERNAME'] = str(os.environ.get('DB_USERNAME', None))
