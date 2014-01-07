@@ -14,7 +14,7 @@ bcrypt = Bcrypt(app)
 if bool(os.environ.get('HEROKU')):
 	app.config['DEBUG'] = True
 	app.config['PORT'] = int(os.environ.get("PORT", 5000))
-	app.config['DB'] = str(os.environ.get('DB_NAME', None))
+	app.config['DB'] = str(os.environ.get('DB', None))
 	app.config['DB_USERNAME'] = str(os.environ.get('DB_USERNAME', None))
 	app.config['DB_PASSWORD'] = str(os.environ.get('DB_PASSWORD', None))
 	app.config['DB_HOST'] = str(os.environ.get('DB_HOST', None))
