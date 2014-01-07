@@ -107,13 +107,14 @@ def register():
 def login():
 	username = request.form['username']
 	password = request.form['password']
-	user = User.objects.get(username=username)
+	users = User.objects(username=username)
 	
 	# if user not in db, redirect to home
-	if user == None:
+	if len(users) == 0:
 		flash('Username invalid')
 		return redirect(url_for('home'))
 	else:
+		user = users[0]
 		# username valid, check password against hashed password in db
 		if bcrypt.check_password_hash(user.password, password):
 			# add username to session
